@@ -1,0 +1,51 @@
+# _BASE_: "../Base-RetinaNet.yaml"
+OUTPUT_DIR: "./object_detection_exp/ycbv/"
+
+MODEL:
+  META_ARCHITECTURE: "ProbabilisticRetinaNet"
+  WEIGHTS: "detectron2://COCO-Detection/retinanet_R_50_FPN_3x/190397829/model_final_5bd44e.pkl"
+
+  BACKBONE:
+    NAME: "build_retinanet_resnet_fpn_backbone"
+  # FREEZE_AT: 5
+  
+  RESNETS:
+    OUT_FEATURES: ["res3", "res4", "res5"]
+    DEPTH: 50
+  
+  ANCHOR_GENERATOR:
+    SIZES: !!python/object/apply:eval ["[[x, x * 2**(1.0/3), x * 2**(2.0/3) ] for x in [32, 64, 128, 256, 512 ]]"]
+  
+  FPN:
+    IN_FEATURES: ["res3", "res4", "res5"]
+  
+  RETINANET:
+    IOU_THRESHOLDS: [0.4, 0.5]
+    IOU_LABELS: [0, -1, 1]
+    SMOOTH_L1_LOSS_BETA: 0.0
+    NUM_CLASSES: 21
+
+  
+  PROBABILISTIC_MODELING:
+    # Settings for monte-carlo dropout
+    DROPOUT_RATE: 0.1 # 0.0 for no dropout
+
+INPUT:
+    MIN_SIZE_TRAIN: (640, 672, 704, 736, 768, 800)
+
+DATALOADER:
+    NUM_WORKERS: 4  # Depends on the available memory
+
+SOLVER:
+  IMS_PER_BATCH: 4
+  BASE_LR: 5e-5  # 5e-5, Note that RetinaNet uses a different default learning rate
+  STEPS: (3000, 5000)
+  MAX_ITER: 6000
+  CHECKPOINT_PERIOD: 2000
+
+DATASETS:
+  TRAIN: ("ycbv_real_train",)
+  TEST: ("ycbv_real_test",)
+
+TEST:
+    EVAL_PERIOD: 1000

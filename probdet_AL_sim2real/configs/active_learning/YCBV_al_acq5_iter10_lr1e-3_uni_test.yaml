@@ -1,0 +1,51 @@
+PROBABILISTIC_INFERENCE:
+    DIST_NAME_MUTUAL_INFO: 'categorical' # 'bernoulli', 'categorical'
+
+MODEL:
+    BACKBONE:
+        FREEZE_ALL: False
+    RPN:
+        NMS_THRESH: 0.7
+    ROI_HEADS:
+        NMS_THRESH_TEST: 0.3
+        SCORE_THRESH_TEST: 0.05
+    RETINANET:
+        NMS_THRESH_TEST: 0.5
+        SCORE_THRESH_TEST: 0.01
+
+AL:
+    INITIAL_CONFIG: 'retinanet/retinanet_R_50_FPN_3x_ycbv_sim_dropout01_lr5e-4_unitest.yaml' # config file used to train the initial model
+    # INITIAL_CONFIG: 'faster-rcnn/faster_rcnn_R_50_FPN_3x_ycbv_sim_aug_dropout01_lr1e-4.yaml'
+    # MODEL_TO_LOAD: 'model_0039999.pth' # model_final.pth, model_007999
+    MODEL_TO_LOAD: 'model_0007999.pth'
+    SUBSAMPLING_PERC: 0.1 # for testing
+    NUM_ITER: 10
+    NUM_ACQ_EACH_ITER: 5
+    VAL_DATASET: 'ycbv_real_val'
+    MAX_EPOCH_EACH_ITER: 0 # number epochs, if 0, then set MAX_ITER directly
+    EVAL_EVERY_EPOCH: 0 # number epochs, if 0, then set EVAL_PERIOD directly
+    SAMPLING_MODE: 'clue' # 'Hybrid', 'clue', 'TopN', 'Coreset', 'RandomTopN', 'TopNBalancedSyn', 'TopNBalancedReal', 'RandomTopNBalancedSyn', 'RandomTopNBalancedReal'
+    ACQ_MODE: "cls_batch_bald" # 'cls', 'reg', 'both', 'max', "cls_bald", "cls_batch_bald"
+    AGG_MODE: 'avg' # 'sum', 'avg', 'max'
+    ACQ_CLS_BATCH_BALD:
+        NUM_SAMPLES: 1000
+    ACQ_SUM:
+        WEIGHT_CLS: 1.0
+        WEIGHT_REG: 0.001
+
+SOLVER:
+    IMS_PER_BATCH: 4 # one epoch = (iter*NUM_SELECTION_EACH_ITER/IMS_PER_BATCH) iterations
+    BASE_LR: 1e-3 
+    MAX_ITER: 10 
+    # WARMUP_FACTOR: 1.0 # disable lr warmup
+    # GAMMA: 1.0 # disable le decay
+    # CHECKPOINT_PERIOD: 100000
+    # STEPS: (50000, 80000)
+
+DATASETS:
+    TRAIN: ("ycbv_real_val",)  # to be selected as pool set
+    TEST: ("ycbv_real_val",)
+
+TEST:
+    DETECTIONS_PER_IMAGE: 50
+    EVAL_PERIOD: 5

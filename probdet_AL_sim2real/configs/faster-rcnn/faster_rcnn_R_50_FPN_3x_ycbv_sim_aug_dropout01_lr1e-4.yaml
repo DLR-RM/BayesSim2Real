@@ -1,0 +1,37 @@
+_BASE_: "../Base-COCO-RCNN-FPN.yaml"
+OUTPUT_DIR: "./object_detection_exp/ycbv/"
+MODEL:
+    ROI_HEADS:
+        NAME: "ProbabilisticROIHeads"
+        IN_FEATURES: ["p2", "p3", "p4", "p5"]
+        NUM_CLASSES: 21
+
+    PROBABILISTIC_MODELING:
+        # Settings for monte-carlo dropout
+        DROPOUT_RATE: 0.1 # 0.0 for no dropouts
+
+    ROI_BOX_HEAD:
+        NAME: "DropoutFastRCNNConvFCHead"
+        NUM_FC: 2
+        POOLER_RESOLUTION: 7
+
+
+INPUT:
+    COPYPOSE_AUG: True
+
+SOLVER:
+    IMS_PER_BATCH: 4
+    BASE_LR: 1e-4 
+    STEPS: (30000, 60000)
+    MAX_ITER: 100000
+    CHECKPOINT_PERIOD: 10000
+
+DATASETS:
+  TRAIN: ("ycbv_sim",)
+  TEST: ("ycbv_real_test",)
+
+TEST:
+  DETECTIONS_PER_IMAGE: 15 # maximum detections after nms in each image
+  EVAL_PERIOD: 20000
+
+VERSION: 2
