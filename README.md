@@ -1,5 +1,3 @@
-## Source code for IROS 2022 paper: Bayesian Active Learning for Sim-to-Real Robotic Perception, will be available on 23.10.2022.
-=======
 # Bayesian Active Learning for Sim-to-Real Robotic Perception
 
 Jianxiang Feng, Jongseok Lee, Maximilian Durner and Rudolph Triebel
