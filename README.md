@@ -146,7 +146,7 @@ Activate virtual environment:
   ./probdet_AL_sim2real/eval_al_net.sh # test al trained models
  ``` 
   
-## Acknowledge
+## Acknowledgement
 Probdet: https://github.com/asharakeh/probdet;
   
 Batach-bald: https://github.com/BlackHC/BatchBALD.
