@@ -4,18 +4,6 @@ Jianxiang Feng, Jongseok Lee, Maximilian Durner and Rudolph Triebel
 
 Accepted at IROS 2022. [Paper](https://arxiv.org/abs/2109.11547)
 
-### Citation
-
-If you find our work useful for your research, please consider citing
-
-```
-@inproceedings{feng2022bayesian,
-  title={Bayesian Active Learning for Sim-to-Real Robotic Perception},
-  author={Jianxiang Feng, Jongseok Lee and Durner, Maximilian and Triebel, Rudolph},
-  booktitle={IROS},
-  year={2022}
-}
-```
 
 ### Overview
 
@@ -150,3 +138,16 @@ Activate virtual environment:
 Probdet: https://github.com/asharakeh/probdet;
   
 Batach-bald: https://github.com/BlackHC/BatchBALD.
+
+### Citation
+
+If you find our work useful for your research, please consider citing
+
+```
+@inproceedings{feng2022bayesian,
+  title={Bayesian Active Learning for Sim-to-Real Robotic Perception},
+  author={Jianxiang Feng, Jongseok Lee and Durner, Maximilian and Triebel, Rudolph},
+  booktitle={IROS},
+  year={2022}
+}
+```
